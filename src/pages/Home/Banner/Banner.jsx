@@ -10,6 +10,7 @@ const Banner = () => {
         <Carousel 
         autoPlay={true}
         infiniteLoop={true}
+        className='p-20'
         >
                 <div>
                     <img src={bannerImg1} />
