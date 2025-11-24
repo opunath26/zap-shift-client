@@ -16,7 +16,7 @@ const Brands = () => {
     return (
         <div className='m-20 p-15'>
             <div>
-                <h2 className='mb-20 font-bold text-secondary text-4xl text-center'>We've helped thousands of sales teams</h2>
+                <h2 className='mb-10 font-bold text-secondary text-4xl text-center'>We've helped thousands of sales teams</h2>
             </div>
             <Swiper
             loop={true}
@@ -33,7 +33,7 @@ const Brands = () => {
             {
                 brandLogos.map((logo, index) => (
                     <SwiperSlide key={index}>
-                        <img src={logo} alt={`Brand Logo ${index + 1}`} className="mx-auto h-10" />
+                        <img src={logo} alt={`Brand Logo ${index + 1}`} className="mx-auto h-8" />
                     </SwiperSlide>
                 ))
             }
