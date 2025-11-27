@@ -1,9 +1,19 @@
 import React from "react";
 import Logo from "../../../components/Logo/Logo";
 import { Menu } from "lucide-react"; // icon
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
+
+  const {user, logOut} = useAuth();
+
+  const handleLogOut = () => {
+    logOut()
+      .then()
+      .catch(error => {
+        console.log(error);
+      })};
 
     const links = 
     <>
@@ -35,15 +45,26 @@ const Navbar = () => {
 
       {/* Right Buttons */}
       <div className="hidden md:flex flex-none space-x-2">
-        <button to="/signin" className="btn-outline btn btn-sm">
+        {/* <button to="/signin" className="btn-outline btn btn-sm">
           Sign In
-        </button>
-        <button
-          to="/signup"
+        </button> */}
+        {
+          user ?
+          <Link onClick={handleLogOut} to="/login"
+          className="bg-primary text-black btn btn-sm"
+        > Log Out </Link> 
+
+        : <Link to="/login"
           className="bg-primary text-black btn btn-sm"
         >
-          Sign Up
-        </button>
+          Log In </Link>
+        }
+
+        <Link to="/beARider"
+          className="bg-primary text-black btn btn-sm"
+        >
+          Be a rider </Link>
+
       </div>
 
       {/* Mobile Drawer Menu */}
@@ -54,16 +75,24 @@ const Navbar = () => {
           {links}
 
           <div className="space-y-2 mt-4 pt-4 border-t">
-            <button to="/signin" className="btn-outline w-full btn btn-sm">
-              Sign In
-            </button>
-            <button
-              to="/signup"
+            
+            {
+              user ?
+              <Link onClick={handleLogOut}
+              to="/login"
               className="w-full btn btn-sm"
               style={{ backgroundColor: "#CAEB66" }}
             >
-              Sign Up
-            </button>
+              Log Out
+            </Link> : 
+            <Link 
+              to="/home"
+              className="w-full btn btn-sm"
+              style={{ backgroundColor: "#CAEB66" }}
+            >
+              Log In
+            </Link>
+            }
           </div>
         </ul>
       </div>

@@ -1,6 +1,8 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
+import { Link } from "react-router";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Register = () => {
   const {
@@ -19,6 +21,8 @@ const Register = () => {
       .catch((error) => {
         console.log(error);
       });
+
+      
   };
 
   return (
@@ -94,20 +98,23 @@ const Register = () => {
         <div className="my-3 text-gray-400 text-center">Or</div>
 
         {/* Google Login */}
-        <button className="flex justify-center items-center gap-2 py-3 border rounded-lg w-full">
+
+          <SocialLogin type="register"></SocialLogin>
+
+        {/* <button className="flex justify-center items-center gap-2 py-3 border rounded-lg w-full">
           <img
             src="https://www.svgrepo.com/show/475656/google-color.svg"
             alt="Google"
             className="w-5"
           />
           Register with Google
-        </button>
+        </button> */}
 
         {/* Login Redirect */}
         <p className="mt-4 text-gray-600 text-sm">
           Already have an account?{" "}
           <span className="font-semibold text-green-600 hover:underline cursor-pointer">
-            Login
+            <Link to="/login">Login</Link>
           </span>
         </p>
       </form>
