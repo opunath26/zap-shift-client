@@ -60,7 +60,7 @@ const Navbar = () => {
           Log In </Link>
         }
 
-        <Link to="/beARider"
+        <Link to="/rider"
           className="bg-primary text-black btn btn-sm"
         >
           Be a rider </Link>

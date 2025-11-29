@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../../hooks/useAuth";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "../SocialLogin/SocialLogin";
 
 const Login = () => {
@@ -12,11 +12,14 @@ const Login = () => {
   } = useForm();
 
   const { SignInUser } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleLogin = (data) => {
     SignInUser(data.email, data.password)
       .then((result) => {
         console.log(result.user);
+        navigate(location?.state || '/')
       })
       .catch((error) => {
         console.log(error);
@@ -78,20 +81,15 @@ const Login = () => {
 
           <SocialLogin type="login"></SocialLogin>
 
-        {/* <button className="flex justify-center items-center gap-2 py-3 border rounded-lg w-full">
-          <img
-            src="https://www.svgrepo.com/show/475656/google-color.svg"
-            alt="Google"
-            className="w-5"
-          />
-          Login with Google
-        </button> */}
+       
 
         {/* Register Redirect */}
         <p className="mt-4 text-gray-600 text-sm">
           Don’t have an account?{" "}
           <span className="font-semibold text-green-600 hover:underline cursor-pointer">
-            <Link to="/register">Register</Link>
+            <Link
+             state={location.state}
+             to="/register">Register</Link>
           </span>
         </p>
 
