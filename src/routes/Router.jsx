@@ -10,6 +10,7 @@ import Rider from "../pages/Rider/Rider";
 import SendParcel from "../pages/sendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
+import About from "../pages/Home/About/About";
 
 export const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
         {
             index: true,
             Component: Home
+        },
+        {
+          path: "about",
+          Component: About
         },
         {
           path: "rider",
