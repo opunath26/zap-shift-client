@@ -30,3 +30,7 @@ body {
   width: 24px !important;
   border-radius: 8px !important;
 }
+
+.brand-swiper-linear .swiper-wrapper {
+  transition-timing-function: linear !important;
+}
