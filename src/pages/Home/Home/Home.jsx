@@ -9,6 +9,7 @@ import StatsSection from '../StatsSection/StatsSection';
 import WhyChooseUs from '../WhyChooseUs/WhyChooseUs';
 import JoinBanner from '../JoinBanner/JoinBanner';
 import FAQ from '../FAQ/FAQ';
+import Newsletter from '../Newsletter/Newsletter';
 
 const reviewsPromise = fetch('/reviews.json').then(res => res.json());
 
@@ -19,13 +20,14 @@ const Home = () => {
             <Banner />
             <StatsSection />
             <PricingCalculator />
-            <Work></Work>
-            <OurServices></OurServices>
+            <Work />
+            <OurServices />
             <WhyChooseUs />
             <JoinBanner />
             <FAQ />
-            <Brands></Brands>
-            <Reviews reviewsPromise={reviewsPromise}></Reviews>
+            <Brands />
+            <Reviews reviewsPromise={reviewsPromise} />
+            <Newsletter />
         </div>
     );
 };
