@@ -11,7 +11,7 @@ import customerTop from '../../../assets/banner/customer-top.png';
 const Reviews = ({ reviewsPromise }) => {
   const reviews = use(reviewsPromise);
 
-  // Optional: Safety check if reviews is undefined/empty
+  // Safety check if reviews is undefined/empty
   if (!reviews || reviews.length === 0) return null;
 
   return (
@@ -24,7 +24,10 @@ const Reviews = ({ reviewsPromise }) => {
         </div>
         
         <div className="mx-auto max-w-3xl text-center">
-          <h2 className="mb-4 font-bold text-secondary text-3xl sm:text-4xl lg:text-5xl">
+          <span className="inline-block bg-primary/20 mb-3 px-4 py-1.5 rounded-full font-bold text-secondary text-xs uppercase tracking-widest">
+            Testimonials
+          </span>
+          <h2 className="mb-4 font-extrabold text-secondary text-3xl sm:text-4xl lg:text-5xl">
             What Our Customers Are Saying
           </h2>
           <p className="mb-12 text-gray-600 text-sm sm:text-base leading-relaxed">
@@ -50,10 +53,10 @@ const Reviews = ({ reviewsPromise }) => {
               depth: 200,
               modifier: 1,
               scale: 0.85,
-              slideShadows: false, // Turned off default harsh shadows
+              slideShadows: false,
             }}
             autoplay={{
-              delay: 3000,
+              delay: 3500,
               disableOnInteraction: false,
             }}
             pagination={{
@@ -61,10 +64,10 @@ const Reviews = ({ reviewsPromise }) => {
               dynamicBullets: true,
             }}
             modules={[EffectCoverflow, Pagination, Autoplay]}
-            className="!pb-12" // Extra padding bottom for pagination bullets
+            className="!pb-12 custom-swiper-pagination"
           >
             {reviews.map(review => (
-              <SwiperSlide key={review.id} className="py-4">
+              <SwiperSlide key={review._id || review.id} className="py-4">
                 <ReviewCard review={review} />
               </SwiperSlide>
             ))}
