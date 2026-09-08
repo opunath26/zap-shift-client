@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { FaEye, FaEyeSlash, FaEnvelope, FaLock, FaUser, FaImage } from "react-icons/fa6";
+import { FaEye, FaEyeSlash, FaEnvelope, FaLock, FaUser, FaImage, FaTruckFast } from "react-icons/fa6";
 import { motion } from "framer-motion";
 
 const Register = () => {
@@ -22,111 +22,109 @@ const Register = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const handleRegistration = (data) => {
+  const from = location?.state?.from?.pathname || "/";
+
+  const handleRegistration = async (data) => {
     setLoading(true);
     const profileImg = data.photo[0];
 
-    registerUser(data.email, data.password)
-      .then((result) => {
-        // Prepare image for ImgBB upload
-        const formData = new FormData();
-        formData.append("image", profileImg);
+    try {
+      // 1. Firebase Auth - Create User
+      await registerUser(data.email, data.password);
 
-        const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+      // 2. ImgBB Upload
+      const formData = new FormData();
+      formData.append("image", profileImg);
+      const image_API_URL = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`;
+      
+      const imgRes = await axios.post(image_API_URL, formData);
+      const photoURL = imgRes.data.data.url;
 
-        axios
-          .post(image_API_URL, formData)
-          .then((res) => {
-            const userProfile = {
-              displayName: data.name,
-              photoURL: res.data.data.url,
-            };
-
-            updateUserProfile(userProfile)
-              .then(() => {
-                setLoading(false);
-                Swal.fire({
-                  icon: "success",
-                  title: "Account Created!",
-                  text: "Welcome to Zap-Shift Express Logistics.",
-                  toast: true,
-                  position: "top-end",
-                  showConfirmButton: false,
-                  timer: 3000,
-                  timerProgressBar: true,
-                });
-                navigate(location?.state || "/");
-              })
-              .catch((error) => {
-                setLoading(false);
-                Swal.fire({
-                  icon: "error",
-                  title: "Profile Update Failed",
-                  text: error.message,
-                  confirmButtonColor: "#03373D",
-                });
-              });
-          })
-          .catch((error) => {
-            setLoading(false);
-            Swal.fire({
-              icon: "error",
-              title: "Image Upload Failed",
-              text: "Could not upload profile picture. Please try again.",
-              confirmButtonColor: "#03373D",
-            });
-          });
-      })
-      .catch((error) => {
-        setLoading(false);
-        let errorMessage = "Registration failed. Please try again.";
-        if (error.code === "auth/email-already-in-use") {
-          errorMessage = "This email is already registered.";
-        }
-
-        Swal.fire({
-          icon: "error",
-          title: "Registration Error",
-          text: errorMessage,
-          confirmButtonColor: "#03373D",
-        });
+      // 3. Update Firebase Profile
+      await updateUserProfile({
+        displayName: data.name,
+        photoURL: photoURL,
       });
+
+      // 4. Save User Info to MongoDB
+      const userInfo = {
+        name: data.name,
+        email: data.email,
+        photoURL: photoURL,
+        role: "user",
+        createdAt: new Date(),
+      };
+
+      await axios.post("http://localhost:3000/users", userInfo);
+
+      setLoading(false);
+
+      // 5. Success Notification & Redirect
+      Swal.fire({
+        icon: "success",
+        title: "Account Created!",
+        text: "Welcome to ZapShift Express Logistics.",
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => {
+        navigate(from, { replace: true });
+      });
+
+    } catch (error) {
+      setLoading(false);
+      console.error("Registration Process Error:", error);
+      
+      let errorMessage = "Registration failed. Please try again.";
+      if (error.code === "auth/email-already-in-use") {
+        errorMessage = "This email is already registered.";
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: error.message || errorMessage,
+        confirmButtonColor: "#03373D",
+      });
+    }
   };
 
   return (
-    <div className="mx-auto px-2 py-4 w-full max-w-md">
+    <div className="flex justify-center items-center p-4 w-full min-h-[85vh]">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut" }}
-        className="bg-white shadow-xl p-6 sm:p-8 border border-gray-100 rounded-3xl"
+        transition={{ duration: 0.3 }}
+        className="bg-white shadow-xl p-8 border border-gray-100 rounded-3xl w-full max-w-md"
       >
         {/* Header */}
-        <div className="mb-6 text-left">
-          <h2 className="font-extrabold text-secondary text-3xl sm:text-4xl">
+        <div className="mb-6">
+          <div className="inline-flex items-center gap-1.5 bg-[#03373D]/10 mb-3 px-3 py-1 rounded-full font-bold text-[#03373D] text-xs">
+            <FaTruckFast className="text-[#03373D]" /> ZapShift Logistics
+          </div>
+          <h2 className="font-extrabold text-[#03373D] text-3xl tracking-tight">
             Create Account
           </h2>
-          <p className="mt-1.5 text-gray-500 text-sm">
-            Join Zap-Shift for seamless logistics management
+          <p className="mt-1 text-gray-500 text-xs">
+            Join ZapShift for seamless logistics management
           </p>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit(handleRegistration)} className="space-y-4">
           
-          {/* Name Field */}
+          {/* Full Name */}
           <div>
-            <label className="block mb-1.5 font-semibold text-secondary text-sm">
+            <label className="block mb-1 font-bold text-[#03373D] text-xs">
               Full Name
             </label>
             <div className="relative">
-              <span className="top-1/2 left-3.5 absolute text-gray-400 -translate-y-1/2">
-                <FaUser />
-              </span>
+              <FaUser className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
               <input
                 type="text"
                 {...register("name", { required: "Name is required" })}
-                className="bg-gray-50/50 focus:bg-white py-3 pr-4 pl-10 border border-gray-200 focus:border-secondary rounded-xl focus:outline-none w-full text-secondary text-sm transition-all"
+                className="bg-gray-50/50 focus:bg-white py-3 pr-4 pl-10 border border-gray-200 focus:border-[#03373D] rounded-xl focus:outline-none w-full text-[#03373D] text-sm transition-all"
                 placeholder="John Doe"
               />
             </div>
@@ -137,20 +135,18 @@ const Register = () => {
             )}
           </div>
 
-          {/* Photo Field */}
+          {/* Profile Photo */}
           <div>
-            <label className="block mb-1.5 font-semibold text-secondary text-sm">
+            <label className="block mb-1 font-bold text-[#03373D] text-xs">
               Profile Photo
             </label>
             <div className="relative">
-              <span className="top-1/2 left-3.5 absolute text-gray-400 -translate-y-1/2">
-                <FaImage />
-              </span>
+              <FaImage className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
               <input
                 type="file"
                 accept="image/*"
                 {...register("photo", { required: "Photo is required" })}
-                className="bg-gray-50/50 focus:bg-white file:bg-secondary/10 file:hover:bg-secondary/20 file:mr-3 py-2 pr-4 pl-10 border border-gray-200 focus:border-secondary file:border-0 rounded-xl file:rounded-lg focus:outline-none w-full file:font-semibold text-secondary file:text-secondary text-sm transition-all"
+                className="bg-gray-50/50 hover:file:bg-[#03373D]/20 focus:bg-white file:bg-[#03373D]/10 file:mr-3 file:px-3 py-2 file:py-1 pr-4 pl-10 border border-gray-200 focus:border-[#03373D] file:border-0 rounded-xl file:rounded-lg focus:outline-none w-full file:font-semibold text-gray-600 file:text-[#03373D] file:text-xs text-sm transition-all"
               />
             </div>
             {errors.photo && (
@@ -160,15 +156,13 @@ const Register = () => {
             )}
           </div>
 
-          {/* Email Field */}
+          {/* Email Address */}
           <div>
-            <label className="block mb-1.5 font-semibold text-secondary text-sm">
+            <label className="block mb-1 font-bold text-[#03373D] text-xs">
               Email Address
             </label>
             <div className="relative">
-              <span className="top-1/2 left-3.5 absolute text-gray-400 -translate-y-1/2">
-                <FaEnvelope />
-              </span>
+              <FaEnvelope className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
               <input
                 type="email"
                 {...register("email", {
@@ -178,7 +172,7 @@ const Register = () => {
                     message: "Please enter a valid email address",
                   },
                 })}
-                className="bg-gray-50/50 focus:bg-white py-3 pr-4 pl-10 border border-gray-200 focus:border-secondary rounded-xl focus:outline-none w-full text-secondary text-sm transition-all"
+                className="bg-gray-50/50 focus:bg-white py-3 pr-4 pl-10 border border-gray-200 focus:border-[#03373D] rounded-xl focus:outline-none w-full text-[#03373D] text-sm transition-all"
                 placeholder="name@example.com"
               />
             </div>
@@ -189,15 +183,13 @@ const Register = () => {
             )}
           </div>
 
-          {/* Password Field */}
+          {/* Password */}
           <div>
-            <label className="block mb-1.5 font-semibold text-secondary text-sm">
+            <label className="block mb-1 font-bold text-[#03373D] text-xs">
               Password
             </label>
             <div className="relative">
-              <span className="top-1/2 left-3.5 absolute text-gray-400 -translate-y-1/2">
-                <FaLock />
-              </span>
+              <FaLock className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
               <input
                 type={showPassword ? "text" : "password"}
                 {...register("password", {
@@ -211,13 +203,13 @@ const Register = () => {
                     message: "Must contain an uppercase & special character",
                   },
                 })}
-                className="bg-gray-50/50 focus:bg-white py-3 pr-10 pl-10 border border-gray-200 focus:border-secondary rounded-xl focus:outline-none w-full text-secondary text-sm transition-all"
+                className="bg-gray-50/50 focus:bg-white py-3 pr-10 pl-10 border border-gray-200 focus:border-[#03373D] rounded-xl focus:outline-none w-full text-[#03373D] text-sm transition-all"
                 placeholder="••••••••"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="top-1/2 right-3.5 absolute focus:outline-none text-gray-400 hover:text-secondary -translate-y-1/2"
+                className="top-1/2 right-3.5 absolute text-gray-400 hover:text-[#03373D] -translate-y-1/2"
               >
                 {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
@@ -233,7 +225,7 @@ const Register = () => {
           <button
             type="submit"
             disabled={loading}
-            className="bg-primary hover:bg-primary/90 disabled:opacity-50 shadow-md mt-2 py-3.5 rounded-xl w-full font-bold text-secondary active:scale-95 transition-all cursor-pointer"
+            className="bg-[#C7EA52] hover:bg-[#b8dd42] disabled:opacity-50 shadow-md py-3.5 rounded-xl w-full font-bold text-[#03373D] active:scale-[0.99] transition-all cursor-pointer"
           >
             {loading ? (
               <span className="loading loading-spinner loading-sm"></span>
@@ -245,7 +237,9 @@ const Register = () => {
           {/* Divider */}
           <div className="flex items-center my-4">
             <div className="flex-grow border-gray-200 border-t"></div>
-            <span className="px-3 text-gray-400 text-xs uppercase">Or</span>
+            <span className="px-3 font-medium text-gray-400 text-xs uppercase">
+              Or
+            </span>
             <div className="flex-grow border-gray-200 border-t"></div>
           </div>
 
@@ -253,12 +247,12 @@ const Register = () => {
           <SocialLogin type="register" />
 
           {/* Login Redirect */}
-          <p className="mt-6 text-gray-600 text-sm text-center">
+          <p className="mt-6 text-gray-600 text-xs text-center">
             Already have an account?{" "}
             <Link
               state={location.state}
               to="/login"
-              className="font-bold text-secondary hover:underline"
+              className="font-bold text-[#03373D] hover:underline"
             >
               Login
             </Link>
