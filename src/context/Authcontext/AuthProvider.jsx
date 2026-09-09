@@ -40,7 +40,6 @@ const AuthProvider = ({ children }) => {
 
     const updateUserProfile = (profile) => {
         return updateProfile(auth.currentUser, profile).then(() => {
-            // প্রোফাইল আপডেট হলে লোকাল ইউজার অবজেক্ট রিফ্রেশ
             setUser({ ...auth.currentUser });
         });
     };
@@ -50,17 +49,15 @@ const AuthProvider = ({ children }) => {
         const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
             setUser(currentUser);
 
-            // যদি গুগল দিয়ে লগইন করার সময় মঙ্গোডিবিতে ইউজার না থাকে, তবে তা পাঠাবে
             if (currentUser?.email) {
                 const userInfo = {
                     name: currentUser.displayName,
                     email: currentUser.email,
                     image: currentUser.photoURL,
-                    role: 'user', // ডিফল্ট রোল
+                    role: 'user',
                 };
 
                 try {
-                    // আপনার ব্যাকএন্ডের সঠিক API URL বসান
                     await axios.post('http://localhost:5000/users', userInfo);
                 } catch (error) {
                     console.error("Failed to sync user with MongoDB:", error);
