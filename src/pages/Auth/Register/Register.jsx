@@ -46,13 +46,12 @@ const Register = () => {
         photoURL: photoURL,
       });
 
-      // 4. Save User Info to MongoDB
+      // 4. Save User Info to MongoDB via Express Backend
       const userInfo = {
         name: data.name,
         email: data.email,
         photoURL: photoURL,
         role: "user",
-        createdAt: new Date(),
       };
 
       await axios.post("http://localhost:3000/users", userInfo);
@@ -91,176 +90,174 @@ const Register = () => {
   };
 
   return (
-    <div className="flex justify-center items-center p-4 w-full min-h-[85vh]">
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="bg-white shadow-xl p-8 border border-gray-100 rounded-3xl w-full max-w-md"
-      >
-        {/* Header */}
-        <div className="mb-6">
-          <div className="inline-flex items-center gap-1.5 bg-[#03373D]/10 mb-3 px-3 py-1 rounded-full font-bold text-[#03373D] text-xs">
-            <FaTruckFast className="text-[#03373D]" /> ZapShift Logistics
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+      className="px-1 py-2 w-full"
+    >
+      {/* Header */}
+      <div className="mb-5">
+        <div className="inline-flex items-center gap-1.5 bg-[#03373D]/10 mb-2 px-3 py-1 rounded-full font-bold text-[#03373D] text-xs">
+          <FaTruckFast className="text-[#03373D]" /> ZapShift Logistics
+        </div>
+        <h2 className="font-extrabold text-[#03373D] text-2xl sm:text-3xl tracking-tight">
+          Create Account
+        </h2>
+        <p className="mt-1 text-gray-500 text-xs sm:text-sm">
+          Join ZapShift for seamless logistics management
+        </p>
+      </div>
+
+      {/* Form */}
+      <form onSubmit={handleSubmit(handleRegistration)} className="space-y-3.5">
+        
+        {/* Full Name */}
+        <div>
+          <label className="block mb-1 font-bold text-[#03373D] text-xs">
+            Full Name
+          </label>
+          <div className="relative">
+            <FaUser className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
+            <input
+              type="text"
+              {...register("name", { required: "Name is required" })}
+              className="bg-gray-50/60 focus:bg-white py-2.5 pr-4 pl-10 border border-gray-200 focus:border-[#03373D] rounded-xl focus:outline-none w-full text-[#03373D] text-sm transition-all"
+              placeholder="John Doe"
+            />
           </div>
-          <h2 className="font-extrabold text-[#03373D] text-3xl tracking-tight">
-            Create Account
-          </h2>
-          <p className="mt-1 text-gray-500 text-xs">
-            Join ZapShift for seamless logistics management
-          </p>
+          {errors.name && (
+            <span className="block mt-1 font-medium text-red-500 text-xs">
+              {errors.name.message}
+            </span>
+          )}
         </div>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit(handleRegistration)} className="space-y-4">
-          
-          {/* Full Name */}
-          <div>
-            <label className="block mb-1 font-bold text-[#03373D] text-xs">
-              Full Name
-            </label>
-            <div className="relative">
-              <FaUser className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
-              <input
-                type="text"
-                {...register("name", { required: "Name is required" })}
-                className="bg-gray-50/50 focus:bg-white py-3 pr-4 pl-10 border border-gray-200 focus:border-[#03373D] rounded-xl focus:outline-none w-full text-[#03373D] text-sm transition-all"
-                placeholder="John Doe"
-              />
-            </div>
-            {errors.name && (
-              <span className="block mt-1 font-medium text-red-500 text-xs">
-                {errors.name.message}
-              </span>
-            )}
+        {/* Profile Photo */}
+        <div>
+          <label className="block mb-1 font-bold text-[#03373D] text-xs">
+            Profile Photo
+          </label>
+          <div className="relative">
+            <FaImage className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
+            <input
+              type="file"
+              accept="image/*"
+              {...register("photo", { required: "Photo is required" })}
+              className="bg-gray-50/60 hover:file:bg-[#03373D]/20 focus:bg-white file:bg-[#03373D]/10 file:mr-3 file:px-3 py-1.5 file:py-1 pr-4 pl-10 border border-gray-200 focus:border-[#03373D] file:border-0 rounded-xl file:rounded-lg focus:outline-none w-full file:font-semibold text-gray-600 file:text-[#03373D] file:text-xs text-sm transition-all cursor-pointer"
+            />
           </div>
-
-          {/* Profile Photo */}
-          <div>
-            <label className="block mb-1 font-bold text-[#03373D] text-xs">
-              Profile Photo
-            </label>
-            <div className="relative">
-              <FaImage className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
-              <input
-                type="file"
-                accept="image/*"
-                {...register("photo", { required: "Photo is required" })}
-                className="bg-gray-50/50 hover:file:bg-[#03373D]/20 focus:bg-white file:bg-[#03373D]/10 file:mr-3 file:px-3 py-2 file:py-1 pr-4 pl-10 border border-gray-200 focus:border-[#03373D] file:border-0 rounded-xl file:rounded-lg focus:outline-none w-full file:font-semibold text-gray-600 file:text-[#03373D] file:text-xs text-sm transition-all"
-              />
-            </div>
-            {errors.photo && (
-              <span className="block mt-1 font-medium text-red-500 text-xs">
-                {errors.photo.message}
-              </span>
-            )}
-          </div>
-
-          {/* Email Address */}
-          <div>
-            <label className="block mb-1 font-bold text-[#03373D] text-xs">
-              Email Address
-            </label>
-            <div className="relative">
-              <FaEnvelope className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
-              <input
-                type="email"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Please enter a valid email address",
-                  },
-                })}
-                className="bg-gray-50/50 focus:bg-white py-3 pr-4 pl-10 border border-gray-200 focus:border-[#03373D] rounded-xl focus:outline-none w-full text-[#03373D] text-sm transition-all"
-                placeholder="name@example.com"
-              />
-            </div>
-            {errors.email && (
-              <span className="block mt-1 font-medium text-red-500 text-xs">
-                {errors.email.message}
-              </span>
-            )}
-          </div>
-
-          {/* Password */}
-          <div>
-            <label className="block mb-1 font-bold text-[#03373D] text-xs">
-              Password
-            </label>
-            <div className="relative">
-              <FaLock className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
-              <input
-                type={showPassword ? "text" : "password"}
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters",
-                  },
-                  pattern: {
-                    value: /(?=.*[A-Z])(?=.*[!@#$&*])/,
-                    message: "Must contain an uppercase & special character",
-                  },
-                })}
-                className="bg-gray-50/50 focus:bg-white py-3 pr-10 pl-10 border border-gray-200 focus:border-[#03373D] rounded-xl focus:outline-none w-full text-[#03373D] text-sm transition-all"
-                placeholder="••••••••"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="top-1/2 right-3.5 absolute text-gray-400 hover:text-[#03373D] -translate-y-1/2"
-              >
-                {showPassword ? <FaEyeSlash /> : <FaEye />}
-              </button>
-            </div>
-            {errors.password && (
-              <span className="block mt-1 font-medium text-red-500 text-xs">
-                {errors.password.message}
-              </span>
-            )}
-          </div>
-
-          {/* Submit Button */}
-          <button
-            type="submit"
-            disabled={loading}
-            className="bg-[#C7EA52] hover:bg-[#b8dd42] disabled:opacity-50 shadow-md py-3.5 rounded-xl w-full font-bold text-[#03373D] active:scale-[0.99] transition-all cursor-pointer"
-          >
-            {loading ? (
-              <span className="loading loading-spinner loading-sm"></span>
-            ) : (
-              "Register"
-            )}
-          </button>
-
-          {/* Divider */}
-          <div className="flex items-center my-4">
-            <div className="flex-grow border-gray-200 border-t"></div>
-            <span className="px-3 font-medium text-gray-400 text-xs uppercase">
-              Or
+          {errors.photo && (
+            <span className="block mt-1 font-medium text-red-500 text-xs">
+              {errors.photo.message}
             </span>
-            <div className="flex-grow border-gray-200 border-t"></div>
+          )}
+        </div>
+
+        {/* Email Address */}
+        <div>
+          <label className="block mb-1 font-bold text-[#03373D] text-xs">
+            Email Address
+          </label>
+          <div className="relative">
+            <FaEnvelope className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
+            <input
+              type="email"
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "Please enter a valid email address",
+                },
+              })}
+              className="bg-gray-50/60 focus:bg-white py-2.5 pr-4 pl-10 border border-gray-200 focus:border-[#03373D] rounded-xl focus:outline-none w-full text-[#03373D] text-sm transition-all"
+              placeholder="name@example.com"
+            />
           </div>
+          {errors.email && (
+            <span className="block mt-1 font-medium text-red-500 text-xs">
+              {errors.email.message}
+            </span>
+          )}
+        </div>
 
-          {/* Social Login */}
-          <SocialLogin type="register" />
-
-          {/* Login Redirect */}
-          <p className="mt-6 text-gray-600 text-xs text-center">
-            Already have an account?{" "}
-            <Link
-              state={location.state}
-              to="/login"
-              className="font-bold text-[#03373D] hover:underline"
+        {/* Password */}
+        <div>
+          <label className="block mb-1 font-bold text-[#03373D] text-xs">
+            Password
+          </label>
+          <div className="relative">
+            <FaLock className="top-1/2 left-3.5 absolute text-gray-400 text-sm -translate-y-1/2" />
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+                pattern: {
+                  value: /(?=.*[A-Z])(?=.*[!@#$&*])/,
+                  message: "Must contain an uppercase & special character",
+                },
+              })}
+              className="bg-gray-50/60 focus:bg-white py-2.5 pr-10 pl-10 border border-gray-200 focus:border-[#03373D] rounded-xl focus:outline-none w-full text-[#03373D] text-sm transition-all"
+              placeholder="••••••••"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="top-1/2 right-3.5 absolute text-gray-400 hover:text-[#03373D] transition-colors -translate-y-1/2 cursor-pointer"
             >
-              Login
-            </Link>
-          </p>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
+          {errors.password && (
+            <span className="block mt-1 font-medium text-red-500 text-xs">
+              {errors.password.message}
+            </span>
+          )}
+        </div>
 
-        </form>
-      </motion.div>
-    </div>
+        {/* Submit Button */}
+        <button
+          type="submit"
+          disabled={loading}
+          className="flex justify-center items-center bg-[#C7EA52] hover:bg-[#b8dd42] disabled:opacity-50 shadow-sm hover:shadow-md mt-1 py-3 rounded-xl w-full font-bold text-[#03373D] text-sm active:scale-[0.99] transition-all cursor-pointer"
+        >
+          {loading ? (
+            <span className="loading loading-spinner loading-sm"></span>
+          ) : (
+            "Register"
+          )}
+        </button>
+
+        {/* Divider */}
+        <div className="flex items-center my-3">
+          <div className="flex-grow border-gray-200 border-t"></div>
+          <span className="px-3 font-medium text-gray-400 text-xs uppercase">
+            Or
+          </span>
+          <div className="flex-grow border-gray-200 border-t"></div>
+        </div>
+
+        {/* Social Login */}
+        <SocialLogin type="register" />
+
+        {/* Login Redirect */}
+        <p className="mt-4 text-gray-600 text-xs text-center">
+          Already have an account?{" "}
+          <Link
+            state={location.state}
+            to="/login"
+            className="font-bold text-[#03373D] hover:underline"
+          >
+            Login
+          </Link>
+        </p>
+
+      </form>
+    </motion.div>
   );
 };
 
