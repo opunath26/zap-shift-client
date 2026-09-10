@@ -10,7 +10,6 @@ import {
   updateProfile 
 } from 'firebase/auth';
 import { auth } from '../../firebase/firebase.init';
-import axios from 'axios';
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -44,26 +43,12 @@ const AuthProvider = ({ children }) => {
         });
     };
 
-    // Observer: Track user state & optionally sync with MongoDB
+    // Observer: Track user authentication state
     useEffect(() => {
-        const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-
-            if (currentUser?.email) {
-                const userInfo = {
-                    name: currentUser.displayName,
-                    email: currentUser.email,
-                    image: currentUser.photoURL,
-                    role: 'user',
-                };
-
-                try {
-                    await axios.post('http://localhost:5000/users', userInfo);
-                } catch (error) {
-                    console.error("Failed to sync user with MongoDB:", error);
-                }
-            }
-
+            
+    
             setLoading(false);
         });
 
