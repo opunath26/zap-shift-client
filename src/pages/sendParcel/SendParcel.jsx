@@ -85,18 +85,27 @@ const SendParcel = () => {
 
     if (result.isConfirmed) {
       try {
-        const parcelData = {
-          ...data,
+        // Construct standard parcel payload matching Prisma backend
+        const parcelPayload = {
+          senderName: user?.displayName || data.senderName,
+          senderEmail: user?.email || data.senderEmail,
+          senderPhone: data.senderPhoneNo,
+          senderAddress: `${data.senderDistricts}, ${data.senderRegion} (${data.pickupInstruction || ''})`,
+          
+          receiverName: data.receiverName,
+          receiverPhone: data.receiverContactNo,
+          receiverAddress: `${data.receiverDistricts}, ${data.receiverRegion} (${data.deliveryInstruction || ''})`,
+          
+          parcelType: data.parcelType,
           parcelWeight: parseFloat(data.parcelWeight) || 0,
-          cost: deliveryCharge,
+          cost: parseFloat(deliveryCharge),
           status: "pending",
           bookingDate: new Date().toISOString(),
-          paymentStatus: "unpaid",
         };
 
-        const res = await axiosSecure.post("/parcels", parcelData);
+        const res = await axiosSecure.post("/parcels", parcelPayload);
 
-        if (res.data.insertedId || res.data.acknowledged) {
+        if (res.data.insertedId || res.data.id) {
           Swal.fire({
             icon: "success",
             title: "Success!",
@@ -111,7 +120,7 @@ const SendParcel = () => {
         Swal.fire({
           icon: "error",
           title: "Booking Failed",
-          text: error.message || "Failed to process parcel request.",
+          text: error.response?.data?.error || error.message || "Failed to process parcel request.",
           confirmButtonColor: "#03373D",
         });
       }
