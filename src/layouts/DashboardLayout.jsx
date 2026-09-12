@@ -1,13 +1,14 @@
 import React from 'react';
 import { CiDeliveryTruck } from 'react-icons/ci';
-import { FaUserCog } from 'react-icons/fa';
+import { FaBoxes, FaUserCog, FaUsers } from 'react-icons/fa';
 import { Link, NavLink, Outlet } from 'react-router';
-import useAuth from '../hooks/useAuth'; 
 import Logo from '../components/Logo/Logo';
-
+import useAuth from '../hooks/useAuth';
+import useUserRole from '../hooks/useUserRole';
 
 const DashboardLayout = () => {
   const { user } = useAuth();
+  const [role, isRoleLoading] = useUserRole();
 
   return (
     <div className="space-y-8 mx-auto max-w-7xl min-h-screen drawer lg:drawer-open">
@@ -58,7 +59,7 @@ const DashboardLayout = () => {
 
           {/* Sidebar content here */}
           <ul className="gap-1 mt-2 w-full menu grow">
-            {/* Homepage Link */}
+            {/* Homepage Link (Common) */}
             <li>
               <Link to="/" className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Homepage">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor" className="inline-block my-1.5 size-5"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path></svg>
@@ -66,16 +67,54 @@ const DashboardLayout = () => {
               </Link>
             </li>
 
-            {/* My Parcels Link */}
-            <li>
-              <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="My Parcels" to="/dashboard/my-parcels">
-                <CiDeliveryTruck className="size-5" />
-                <span className="is-drawer-close:hidden">My Parcels</span>
-              </NavLink>
-            </li>
+            {/* General User Routes */}
+            {role === 'user' && (
+              <>
+                <li>
+                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="My Parcels" to="/dashboard/my-parcels">
+                    <CiDeliveryTruck className="size-5" />
+                    <span className="is-drawer-close:hidden">My Parcels</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Book Parcel" to="/dashboard/book-parcel">
+                    <FaBoxes className="size-5" />
+                    <span className="is-drawer-close:hidden">Book a Parcel</span>
+                  </NavLink>
+                </li>
+              </>
+            )}
 
-            {/* Profile Settings Link */}
-            <li>
+            {/* Admin Routes */}
+            {role === 'admin' && (
+              <>
+                <li>
+                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="All Parcels" to="/dashboard/all-parcels">
+                    <FaBoxes className="size-5" />
+                    <span className="is-drawer-close:hidden">All Parcels</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="All Users" to="/dashboard/all-users">
+                    <FaUsers className="size-5" />
+                    <span className="is-drawer-close:hidden">All Users</span>
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* Delivery Man Routes */}
+            {role === 'deliveryman' && (
+              <li>
+                <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="My Deliveries" to="/dashboard/my-deliveries">
+                  <CiDeliveryTruck className="size-5" />
+                  <span className="is-drawer-close:hidden">My Delivery List</span>
+                </NavLink>
+              </li>
+            )}
+
+            {/* Profile Settings Link (Common) */}
+            <li className="mt-auto">
               <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Settings" to="/dashboard/profile">
                 <FaUserCog className="size-5" />
                 <span className="is-drawer-close:hidden">Profile Settings</span>
