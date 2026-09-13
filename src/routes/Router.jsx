@@ -12,6 +12,7 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import About from "../pages/Home/About/About";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
+import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 
 export const router = createBrowserRouter([
   {
@@ -71,7 +72,11 @@ export const router = createBrowserRouter([
       {
         path: 'all-users',
         Component: AllUsers
-      }
+      },
+      {
+        path: 'all-parcels',
+        Component: AllParcels
+      },
     ]
   }
 ]);
