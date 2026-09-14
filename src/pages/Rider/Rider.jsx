@@ -1,5 +1,5 @@
 import React from 'react';
-import { useForm } from 'react-hook-[#form]';
+import { useForm } from 'react-hook-formd';
 import Swal from 'sweetalert2';
 import sendParcel from '../../assets/banner/agent-pending.png';
 import useAuth from '../../hooks/useAuth';
