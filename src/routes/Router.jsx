@@ -13,6 +13,7 @@ import MyParcels from "../pages/Dashboard/MyParcels/MyParcels";
 import About from "../pages/Home/About/About";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
+import Profile from "../pages/Dashboard/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ export const router = createBrowserRouter([
       {
         path: 'all-parcels',
         Component: AllParcels
+      },
+      {
+        path: 'profile',
+        Component: Profile
       },
     ]
   }
