@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home/Home";
 import Coverage from "../pages/Coverage/Coverage";
@@ -15,78 +15,87 @@ import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 import Profile from "../pages/Dashboard/Profile/Profile";
 import AdminRiderApplications from "../pages/Dashboard/RiderApplications/AdminRiderApplications";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    Component: RootLayout,
+    element: <RootLayout />,
     children: [
-        {
-            index: true,
-            Component: Home
-        },
-        {
-          path: "about",
-          Component: About
-        },
-        {
-          path: "rider",
-          element: <PrivateRoute>
-                        <Rider></Rider>
-                  </PrivateRoute>
-        },
-        {
-          path: "send-parcel",
-          element: <PrivateRoute>
-                        <SendParcel></SendParcel>
-                  </PrivateRoute>,
-                  loader: () => fetch('/serviceCenters.json').then(res => res.json())
-        },
-        {
-          path: "coverage",
-          Component: Coverage,
-          loader: () => fetch('/serviceCenters.json').then(res => res.json())
-        },
-    ]
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "rider",
+        element: (
+          <PrivateRoute>
+            <Rider />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "send-parcel",
+        element: (
+          <PrivateRoute>
+            <SendParcel />
+          </PrivateRoute>
+        ),
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      },
+      {
+        path: "coverage",
+        element: <Coverage />,
+        loader: () => fetch("/serviceCenters.json").then((res) => res.json()),
+      },
+    ],
   },
   {
     path: "/",
-    Component: AuthLayout,
+    element: <AuthLayout />,
     children: [
-       {
+      {
         path: "login",
-        Component: Login
-       },
-       {
+        element: <Login />,
+      },
+      {
         path: "register",
-        Component: Register
-       }
-    ]
+        element: <Register />,
+      },
+    ],
   },
   {
-    path: 'dashboard',
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    path: "dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
-        path: 'my-parcels',
-        Component: MyParcels
+        path: "my-parcels",
+        element: <MyParcels />,
       },
       {
-        path: 'all-users',
-        Component: AllUsers
+        path: "all-users",
+        element: <AllUsers />,
       },
       {
-        path: 'all-parcels',
-        Component: AllParcels
+        path: "all-parcels",
+        element: <AllParcels />,
       },
       {
-        path: 'profile',
-        Component: Profile
+        path: "profile",
+        element: <Profile />,
       },
       {
-        path: 'rider-applications',
-        Component: AdminRiderApplications
+        path: "rider-applications",
+        element: <AdminRoute><AdminRiderApplications /></AdminRoute>,
       },
-    ]
-  }
+    ],
+  },
 ]);
