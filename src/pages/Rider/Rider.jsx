@@ -5,7 +5,6 @@ import sendParcel from '../../assets/banner/agent-pending.png';
 import useAuth from '../../hooks/useAuth';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 
-
 const Rider = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -23,28 +22,43 @@ const Rider = () => {
   });
 
   const onSubmit = async (data) => {
-    try {
-      const res = await axiosSecure.patch(`/users/role/${user?.email}`, {
-        role: 'deliveryman',
-        riderDetails: data,
-      });
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: 'Please confirm that all your provided details are correct.',
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#C6F16A',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Submit!',
+      cancelButtonText: 'Cancel',
+      customClass: {
+        confirmButton: 'text-black font-semibold',
+      },
+    });
 
-      if (res.data) {
+    if (result.isConfirmed) {
+      try {
+        const res = await axiosSecure.post('/rider-applications', data);
+
+        if (res.data?.success) {
+          Swal.fire({
+            title: 'Submitted!',
+            text: 'Your rider application has been submitted for review.',
+            icon: 'success',
+            confirmButtonColor: '#C6F16A',
+            customClass: {
+              confirmButton: 'text-black font-semibold',
+            },
+          });
+          reset();
+        }
+      } catch (error) {
         Swal.fire({
-          title: 'Success!',
-          text: 'Your rider application has been submitted successfully!',
-          icon: 'success',
-          confirmButtonColor: '#C6F16A',
-          confirmButtonTextColor: '#000',
+          title: 'Error!',
+          text: error?.response?.data?.message || error?.response?.data?.error || 'Failed to submit application',
+          icon: 'error',
         });
-        reset();
       }
-    } catch (error) {
-      Swal.fire({
-        title: 'Error!',
-        text: error?.response?.data?.error || 'Failed to submit application',
-        icon: 'error',
-      });
     }
   };
 
