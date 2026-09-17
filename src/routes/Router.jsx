@@ -14,6 +14,7 @@ import About from "../pages/Home/About/About";
 import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 import Profile from "../pages/Dashboard/Profile/Profile";
+import AdminRiderApplications from "../pages/Dashboard/RiderApplications/AdminRiderApplications";
 
 export const router = createBrowserRouter([
   {
@@ -81,6 +82,10 @@ export const router = createBrowserRouter([
       {
         path: 'profile',
         Component: Profile
+      },
+      {
+        path: 'rider-applications',
+        Component: AdminRiderApplications
       },
     ]
   }
