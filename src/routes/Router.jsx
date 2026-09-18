@@ -6,6 +6,8 @@ import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
 import PrivateRoute from "./PrivateRoute";
+import RiderRoute from "./RiderRoute";
+import AdminRoute from "./AdminRoute";
 import Rider from "../pages/Rider/Rider";
 import SendParcel from "../pages/sendParcel/SendParcel";
 import DashboardLayout from "../layouts/DashboardLayout";
@@ -15,7 +17,7 @@ import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 import Profile from "../pages/Dashboard/Profile/Profile";
 import AdminRiderApplications from "../pages/Dashboard/RiderApplications/AdminRiderApplications";
-import AdminRoute from "./AdminRoute";
+import RiderTasks from "../pages/Dashboard/RiderTasks/RiderTasks";
 
 export const router = createBrowserRouter([
   {
@@ -81,20 +83,44 @@ export const router = createBrowserRouter([
         element: <MyParcels />,
       },
       {
-        path: "all-users",
-        element: <AllUsers />,
-      },
-      {
-        path: "all-parcels",
-        element: <AllParcels />,
-      },
-      {
         path: "profile",
         element: <Profile />,
       },
+      
+      //  Rider Exclusive Routes
+      {
+        path: "my-deliveries",
+        element: (
+          <RiderRoute>
+            <RiderTasks />
+          </RiderRoute>
+        ),
+      },
+
+      //  Admin Exclusive Routes
+      {
+        path: "all-users",
+        element: (
+          <AdminRoute>
+            <AllUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "all-parcels",
+        element: (
+          <AdminRoute>
+            <AllParcels />
+          </AdminRoute>
+        ),
+      },
       {
         path: "rider-applications",
-        element: <AdminRoute><AdminRiderApplications /></AdminRoute>,
+        element: (
+          <AdminRoute>
+            <AdminRiderApplications />
+          </AdminRoute>
+        ),
       },
     ],
   },
