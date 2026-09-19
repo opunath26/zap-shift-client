@@ -1,7 +1,7 @@
 import React from 'react';
 import { CiDeliveryTruck } from 'react-icons/ci';
-import { FaBoxes, FaUserCog, FaUsers } from 'react-icons/fa';
-import { Link, NavLink, Outlet } from 'react-router';
+import { FaBoxes, FaUserCog, FaUsers, FaMotorcycle } from 'react-icons/fa';
+import { Link, NavLink, Outlet } from 'react-router-dom';
 import Logo from '../components/Logo/Logo';
 import useAuth from '../hooks/useAuth';
 import useUserRole from '../hooks/useUserRole';
@@ -77,7 +77,7 @@ const DashboardLayout = () => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Book Parcel" to="/dashboard/book-parcel">
+                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Book Parcel" to="/send-parcel">
                     <FaBoxes className="size-5" />
                     <span className="is-drawer-close:hidden">Book a Parcel</span>
                   </NavLink>
@@ -100,10 +100,16 @@ const DashboardLayout = () => {
                     <span className="is-drawer-close:hidden">All Users</span>
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Rider Applications" to="/dashboard/rider-applications">
+                    <FaMotorcycle className="size-5" />
+                    <span className="is-drawer-close:hidden">Rider Requests</span>
+                  </NavLink>
+                </li>
               </>
             )}
 
-            {/* Delivery Man Routes */}
+            {/* Delivery Man (Rider) Routes */}
             {role === 'deliveryman' && (
               <li>
                 <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="My Deliveries" to="/dashboard/my-deliveries">
