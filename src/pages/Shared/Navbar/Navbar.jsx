@@ -1,11 +1,14 @@
 import React from "react";
-import { Link, NavLink } from "react-router";
-import { Menu, LogOut, User as UserIcon } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
+import { Menu, LogOut, User as UserIcon, LayoutDashboard, UserCheck } from "lucide-react";
 import Logo from "../../../components/Logo/Logo";
 import useAuth from "../../../hooks/useAuth";
+import useUserRole from "../../../hooks/useUserRole";
+
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const [role] = useUserRole();
 
   const handleLogOut = () => {
     logOut()
@@ -81,33 +84,75 @@ const Navbar = () => {
           </ul>
         </div>
 
-        {/* Right Buttons */}
+        {/* Right Buttons & Profile Dropdown */}
         <div className="flex items-center space-x-3">
+          {role !== "deliveryman" && (
+            <Link
+              to="/rider"
+              className="hidden sm:inline-flex bg-secondary hover:bg-secondary/90 border-none font-semibold text-white transition-all btn btn-sm"
+            >
+              Be a Rider
+            </Link>
+          )}
+
+          {/* User Logged In State vs Logged Out State */}
           {user ? (
-            <div className="flex items-center gap-3">
-              {/* User Avatar / Name */}
-              <div className="hidden sm:flex items-center gap-2 bg-gray-100 px-3 py-1.5 rounded-full text-sm">
+            <div className="dropdown dropdown-end">
+              {/* Profile Avatar Trigger Button */}
+              <div
+                tabIndex={0}
+                role="button"
+                className="flex items-center gap-2 hover:bg-gray-100 p-1 rounded-full transition-all cursor-pointer"
+              >
                 {user.photoURL ? (
                   <img
                     src={user.photoURL}
                     alt={user.displayName || "User"}
-                    className="rounded-full w-6 h-6 object-cover"
+                    className="rounded-full ring-2 ring-primary/40 w-9 h-9 object-cover"
                   />
                 ) : (
-                  <UserIcon size={16} className="text-gray-600" />
+                  <div className="flex justify-center items-center bg-primary/20 rounded-full w-9 h-9 text-primary">
+                    <UserIcon size={20} />
+                  </div>
                 )}
-                <span className="font-semibold text-gray-800 text-xs sm:text-sm">
-                  {user.displayName?.split(" ")[0] || "User"}
-                </span>
               </div>
 
-              <button
-                onClick={handleLogOut}
-                className="hover:bg-red-50 border border-transparent hover:border-red-200 text-red-600 hover:text-red-700 transition-all btn btn-sm"
+              {/* Dropdown Options */}
+              <ul
+                tabIndex={0}
+                className="right-0 z-[1] bg-white shadow-xl mt-3 p-2 border border-gray-100 rounded-2xl w-56 dropdown-content menu menu-sm"
               >
-                <LogOut size={16} />
-                <span className="hidden sm:inline">Log Out</span>
-              </button>
+                <li className="px-3 py-2 border-b">
+                  <p className="font-bold text-gray-800 text-sm">
+                    {user.displayName || "User"}
+                  </p>
+                  <p className="text-gray-500 text-xs truncate">{user.email}</p>
+                </li>
+
+                <li className="mt-2">
+                  <Link to="/dashboard/profile" className="flex items-center gap-2 py-2 text-gray-700">
+                    <UserCheck size={16} />
+                    <span>Profile</span>
+                  </Link>
+                </li>
+
+                <li>
+                  <Link to="/dashboard" className="flex items-center gap-2 py-2 text-gray-700">
+                    <LayoutDashboard size={16} />
+                    <span>Dashboard</span>
+                  </Link>
+                </li>
+
+                <li className="mt-1 border-t">
+                  <button
+                    onClick={handleLogOut}
+                    className="flex items-center gap-2 py-2 text-red-600 hover:text-red-700"
+                  >
+                    <LogOut size={16} />
+                    <span>Log Out</span>
+                  </button>
+                </li>
+              </ul>
             </div>
           ) : (
             <Link
@@ -117,13 +162,6 @@ const Navbar = () => {
               Log In
             </Link>
           )}
-
-          <Link
-            to="/rider"
-            className="hidden sm:inline-flex bg-secondary hover:bg-secondary/90 border-none font-semibold text-white transition-all btn btn-sm"
-          >
-            Be a Rider
-          </Link>
         </div>
 
         {/* Mobile Drawer Menu */}
@@ -140,12 +178,15 @@ const Navbar = () => {
             </ul>
 
             <div className="space-y-3 pt-6 border-t">
-              <Link
-                to="/rider"
-                className="flex justify-center items-center bg-secondary hover:bg-secondary/90 rounded-lg w-full h-10 font-semibold text-white text-sm"
-              >
-                Be a Rider
-              </Link>
+              {/* Mobile version of Rider Link */}
+              {role !== "deliveryman" && (
+                <Link
+                  to="/rider"
+                  className="flex justify-center items-center bg-secondary hover:bg-secondary/90 rounded-lg w-full h-10 font-semibold text-white text-sm"
+                >
+                  Be a Rider
+                </Link>
+              )}
 
               {user ? (
                 <button
