@@ -17,6 +17,7 @@ import AllUsers from "../pages/Dashboard/AllUsers/AllUsers";
 import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 import Profile from "../pages/Dashboard/Profile/Profile";
 import AdminRiderApplications from "../pages/Dashboard/RiderApplications/AdminRiderApplications";
+import MyDeliveries from "../pages/Dashboard/MyDeliveries/MyDeliveries";
 
 
 export const router = createBrowserRouter([
@@ -88,14 +89,14 @@ export const router = createBrowserRouter([
       },
       
       //  Rider Exclusive Routes
-      // {
-      //   path: "my-deliveries",
-      //   element: (
-      //     <RiderRoute>
-      //       <RiderTasks />
-      //     </RiderRoute>
-      //   ),
-      // },
+      {
+        path: "my-deliveries",
+        element: (
+          <RiderRoute>
+            <MyDeliveries />
+          </RiderRoute>
+        ),
+      },
 
       //  Admin Exclusive Routes
       {
