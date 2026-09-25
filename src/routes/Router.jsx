@@ -18,6 +18,7 @@ import AllParcels from "../pages/Dashboard/AllParcels/AllParcels";
 import Profile from "../pages/Dashboard/Profile/Profile";
 import AdminRiderApplications from "../pages/Dashboard/RiderApplications/AdminRiderApplications";
 import MyDeliveries from "../pages/Dashboard/MyDeliveries/MyDeliveries";
+import RiderDashboard from "../pages/Dashboard/RiderDashboard/RiderDashboard";
 
 
 export const router = createBrowserRouter([
@@ -89,6 +90,14 @@ export const router = createBrowserRouter([
       },
       
       //  Rider Exclusive Routes
+      {
+        path: "rider-dashboard",
+        element: (
+          <RiderRoute>
+            <RiderDashboard />
+          </RiderRoute>
+        ),
+      },
       {
         path: "my-deliveries",
         element: (
