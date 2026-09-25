@@ -19,6 +19,7 @@ import Profile from "../pages/Dashboard/Profile/Profile";
 import AdminRiderApplications from "../pages/Dashboard/RiderApplications/AdminRiderApplications";
 import MyDeliveries from "../pages/Dashboard/MyDeliveries/MyDeliveries";
 import RiderDashboard from "../pages/Dashboard/RiderDashboard/RiderDashboard";
+import AdminCashHandovers from "../pages/Dashboard/AdminCashHandovers/AdminCashHandovers";
 
 
 export const router = createBrowserRouter([
@@ -129,6 +130,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <AdminRiderApplications />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin-cash-handovers",
+        element: (
+          <AdminRoute>
+            <AdminCashHandovers />
           </AdminRoute>
         ),
       },
