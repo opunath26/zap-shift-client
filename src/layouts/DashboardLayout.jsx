@@ -1,6 +1,13 @@
 import React from 'react';
 import { CiDeliveryTruck } from 'react-icons/ci';
-import { FaBoxes, FaUserCog, FaUsers, FaMotorcycle } from 'react-icons/fa';
+import { 
+  FaBoxes, 
+  FaUserCog, 
+  FaUsers, 
+  FaMotorcycle, 
+  FaWallet, 
+  FaHandHoldingUsd 
+} from 'react-icons/fa';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import Logo from '../components/Logo/Logo';
 import useAuth from '../hooks/useAuth';
@@ -106,17 +113,31 @@ const DashboardLayout = () => {
                     <span className="is-drawer-close:hidden">Rider Requests</span>
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Cash Handovers" to="/dashboard/admin-cash-handovers">
+                    <FaHandHoldingUsd className="size-5" />
+                    <span className="is-drawer-close:hidden">Cash Handovers</span>
+                  </NavLink>
+                </li>
               </>
             )}
 
             {/* Delivery Man (Rider) Routes */}
             {role === 'deliveryman' && (
-              <li>
-                <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="My Deliveries" to="/dashboard/my-deliveries">
-                  <CiDeliveryTruck className="size-5" />
-                  <span className="is-drawer-close:hidden">My Delivery List</span>
-                </NavLink>
-              </li>
+              <>
+                <li>
+                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Rider Dashboard" to="/dashboard/rider-dashboard">
+                    <FaWallet className="size-5" />
+                    <span className="is-drawer-close:hidden">Rider Dashboard</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="My Deliveries" to="/dashboard/my-deliveries">
+                    <CiDeliveryTruck className="size-5" />
+                    <span className="is-drawer-close:hidden">My Delivery List</span>
+                  </NavLink>
+                </li>
+              </>
             )}
 
             {/* Profile Settings Link (Common) */}
