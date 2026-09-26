@@ -21,7 +21,6 @@ import MyDeliveries from "../pages/Dashboard/MyDeliveries/MyDeliveries";
 import RiderDashboard from "../pages/Dashboard/RiderDashboard/RiderDashboard";
 import AdminCashHandovers from "../pages/Dashboard/AdminCashHandovers/AdminCashHandovers";
 
-
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -89,8 +88,8 @@ export const router = createBrowserRouter([
         path: "profile",
         element: <Profile />,
       },
-      
-      //  Rider Exclusive Routes
+
+      // Rider Exclusive Routes
       {
         path: "rider-dashboard",
         element: (
@@ -108,7 +107,7 @@ export const router = createBrowserRouter([
         ),
       },
 
-      //  Admin Exclusive Routes
+      // Admin Exclusive Routes
       {
         path: "all-users",
         element: (
