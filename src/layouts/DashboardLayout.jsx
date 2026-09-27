@@ -122,8 +122,8 @@ const DashboardLayout = () => {
               </>
             )}
 
-            {/* Delivery Man (Rider) Routes */}
-            {role === 'deliveryman' && (
+            {/* Rider / Delivery Man Routes */}
+            {(role === 'deliveryman' || role === 'rider') && (
               <>
                 <li>
                   <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Rider Dashboard" to="/dashboard/rider-dashboard">
