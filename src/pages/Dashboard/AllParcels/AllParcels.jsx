@@ -71,9 +71,9 @@ const AllParcels = () => {
     const parcelId = selectedParcel.id || selectedParcel._id;
     const riderData = {
       riderId: chosenRider.id || chosenRider._id,
-      riderName: chosenRider.name,
-      riderEmail: chosenRider.email,
-      riderPhone: chosenRider.phone,
+      riderName: chosenRider.name || chosenRider.displayName || 'N/A',
+      riderEmail: chosenRider.email || '',
+      riderPhone: chosenRider.phone || chosenRider.phoneNumber || 'N/A',
     };
 
     assignRiderMutation.mutate({ parcelId, riderData });
@@ -116,9 +116,9 @@ const AllParcels = () => {
 
   if (isLoading) {
     return (
-      <div className="flex flex-col justify-center items-center my-10 min-h-[60vh] gap-3">
+      <div className="flex flex-col justify-center items-center gap-3 my-10 min-h-[60vh]">
         <span className="text-primary loading loading-spin loading-lg"></span>
-        <p className="text-sm font-medium text-base-content/60">Fetching all parcel details...</p>
+        <p className="font-medium text-sm text-base-content/60">Fetching all parcel details...</p>
       </div>
     );
   }
@@ -126,54 +126,54 @@ const AllParcels = () => {
   return (
     <div className="space-y-6 p-2 md:p-6">
       {/* Top Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="flex md:flex-row flex-col justify-between md:items-center gap-4">
         <div>
-          <h2 className="text-3xl font-extrabold tracking-tight text-base-content">Parcel Management 📦</h2>
-          <p className="text-sm text-base-content/60 mt-1">
+          <h2 className="font-extrabold text-base-content text-3xl tracking-tight">Parcel Management 📦</h2>
+          <p className="mt-1 text-sm text-base-content/60">
             Monitor status, assign riders, and manage all shipment orders in real time.
           </p>
         </div>
       </div>
 
       {/* Metrics Summary Grid */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="stat bg-base-100 rounded-2xl border border-base-200 shadow-sm p-4">
-          <div className="stat-title text-xs font-semibold uppercase tracking-wider">Total Parcels</div>
-          <div className="stat-value text-2xl md:text-3xl font-black text-primary">{stats.total}</div>
+      <div className="gap-4 grid grid-cols-2 lg:grid-cols-4">
+        <div className="bg-base-100 shadow-sm p-4 border border-base-200 rounded-2xl stat">
+          <div className="font-semibold text-xs uppercase tracking-wider stat-title">Total Parcels</div>
+          <div className="font-black text-primary text-2xl md:text-3xl stat-value">{stats.total}</div>
         </div>
-        <div className="stat bg-base-100 rounded-2xl border border-base-200 shadow-sm p-4">
-          <div className="stat-title text-xs font-semibold uppercase tracking-wider text-sky-600">Pending</div>
-          <div className="stat-value text-2xl md:text-3xl font-black text-sky-500">{stats.pending}</div>
+        <div className="bg-base-100 shadow-sm p-4 border border-base-200 rounded-2xl stat">
+          <div className="font-semibold text-sky-600 text-xs uppercase tracking-wider stat-title">Pending</div>
+          <div className="font-black text-sky-500 text-2xl md:text-3xl stat-value">{stats.pending}</div>
         </div>
-        <div className="stat bg-base-100 rounded-2xl border border-base-200 shadow-sm p-4">
-          <div className="stat-title text-xs font-semibold uppercase tracking-wider text-amber-600">On The Way</div>
-          <div className="stat-value text-2xl md:text-3xl font-black text-amber-500">{stats.inTransit}</div>
+        <div className="bg-base-100 shadow-sm p-4 border border-base-200 rounded-2xl stat">
+          <div className="font-semibold text-amber-600 text-xs uppercase tracking-wider stat-title">On The Way</div>
+          <div className="font-black text-amber-500 text-2xl md:text-3xl stat-value">{stats.inTransit}</div>
         </div>
-        <div className="stat bg-base-100 rounded-2xl border border-base-200 shadow-sm p-4">
-          <div className="stat-title text-xs font-semibold uppercase tracking-wider text-emerald-600">Delivered</div>
-          <div className="stat-value text-2xl md:text-3xl font-black text-emerald-500">{stats.delivered}</div>
+        <div className="bg-base-100 shadow-sm p-4 border border-base-200 rounded-2xl stat">
+          <div className="font-semibold text-emerald-600 text-xs uppercase tracking-wider stat-title">Delivered</div>
+          <div className="font-black text-emerald-500 text-2xl md:text-3xl stat-value">{stats.delivered}</div>
         </div>
       </div>
 
       {/* Table Container Card */}
-      <div className="bg-base-100 rounded-2xl border border-base-200 shadow-xl overflow-hidden">
+      <div className="bg-base-100 shadow-xl border border-base-200 rounded-2xl overflow-hidden">
         {/* Controls Header */}
-        <div className="p-5 border-b border-base-200 bg-base-100/50 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="flex md:flex-row flex-col justify-between items-center gap-4 bg-base-100/50 p-5 border-base-200 border-b">
           <div className="w-full md:w-72">
             <input
               type="text"
               placeholder="Search sender, receiver or type..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="input input-bordered input-sm w-full rounded-xl focus:outline-none focus:border-primary"
+              className="focus:border-primary rounded-xl focus:outline-none w-full input input-bordered input-sm"
             />
           </div>
 
-          <div className="flex items-center gap-3 w-full md:w-auto justify-end">
+          <div className="flex justify-end items-center gap-3 w-full md:w-auto">
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="select select-bordered select-sm rounded-xl text-sm focus:outline-none"
+              className="rounded-xl focus:outline-none text-sm select-bordered select-sm select"
             >
               <option value="">All Statuses</option>
               <option value="pending">Pending</option>
@@ -182,7 +182,7 @@ const AllParcels = () => {
               <option value="delivered">Delivered</option>
               <option value="cancelled">Cancelled</option>
             </select>
-            <span className="badge badge-neutral px-3 py-3 rounded-lg text-xs font-medium">
+            <span className="px-3 py-3 rounded-lg font-medium text-xs badge badge-neutral">
               Showing {filteredParcels.length}
             </span>
           </div>
@@ -192,7 +192,7 @@ const AllParcels = () => {
         <div className="overflow-x-auto">
           <table className="table w-full align-middle">
             <thead>
-              <tr className="bg-base-200/60 text-xs uppercase tracking-wider text-base-content/70">
+              <tr className="bg-base-200/60 text-xs text-base-content/70 uppercase tracking-wider">
                 <th className="py-4">#</th>
                 <th>Sender</th>
                 <th>Receiver</th>
@@ -207,7 +207,7 @@ const AllParcels = () => {
             <tbody className="divide-y divide-base-200 text-sm">
               {filteredParcels.length === 0 ? (
                 <tr>
-                  <td colSpan="9" className="text-center py-12 text-base-content/50 font-medium">
+                  <td colSpan="9" className="py-12 font-medium text-base-content/50 text-center">
                     No parcels found matching your criteria.
                   </td>
                 </tr>
@@ -224,7 +224,7 @@ const AllParcels = () => {
                       <div className="text-xs text-base-content/50">{parcel.receiverPhone || 'N/A'}</div>
                     </td>
                     <td>
-                      <span className="badge badge-ghost badge-sm font-medium rounded-md">
+                      <span className="rounded-md font-medium badge badge-ghost badge-sm">
                         {parcel.parcelType || 'Document'}
                       </span>
                     </td>
@@ -247,7 +247,7 @@ const AllParcels = () => {
                       {parcel.assignedRiderName ? (
                         <div className="flex items-center gap-2">
                           <div className="avatar placeholder">
-                            <div className="bg-neutral text-neutral-content rounded-full w-7 text-xs">
+                            <div className="flex justify-center items-center bg-neutral rounded-full w-7 text-neutral-content text-xs">
                               <span>{parcel.assignedRiderName.charAt(0)}</span>
                             </div>
                           </div>
@@ -257,8 +257,8 @@ const AllParcels = () => {
                           </div>
                         </div>
                       ) : (
-                        <span className="inline-flex items-center gap-1 text-xs text-rose-500 font-medium bg-rose-50 dark:bg-rose-950/30 px-2 py-1 rounded-md">
-                          <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span> Unassigned
+                        <span className="inline-flex items-center gap-1 bg-rose-50 dark:bg-rose-950/30 px-2 py-1 rounded-md font-medium text-rose-500 text-xs">
+                          <span className="bg-rose-500 rounded-full w-1.5 h-1.5 animate-pulse"></span> Unassigned
                         </span>
                       )}
                     </td>
@@ -287,15 +287,15 @@ const AllParcels = () => {
       </div>
 
       {/* Modern Assign Rider Modal */}
-      <dialog id="assign_rider_modal" className="modal modal-bottom sm:modal-middle backdrop-blur-sm">
-        <div className="modal-box rounded-3xl p-6 border border-base-200 shadow-2xl">
-          <div className="flex items-center justify-between border-b border-base-200 pb-4 mb-4">
-            <h3 className="font-bold text-xl text-base-content flex items-center gap-2">
+      <dialog id="assign_rider_modal" className="modal-bottom backdrop-blur-sm modal sm:modal-middle">
+        <div className="shadow-2xl p-6 border border-base-200 rounded-3xl modal-box">
+          <div className="flex justify-between items-center mb-4 pb-4 border-base-200 border-b">
+            <h3 className="flex items-center gap-2 font-bold text-base-content text-xl">
               <span>🚴</span> Assign Delivery Rider
             </h3>
             <button
               type="button"
-              className="btn btn-sm btn-circle btn-ghost text-base-content/50"
+              className="text-base-content/50 btn btn-sm btn-circle btn-ghost"
               onClick={() => document.getElementById('assign_rider_modal').close()}
             >
               ✕
@@ -305,14 +305,14 @@ const AllParcels = () => {
           {selectedParcel && (
             <form onSubmit={handleAssignSubmit} className="space-y-5">
               {/* Selected Parcel Quick Info */}
-              <div className="bg-base-200/60 border border-base-200 p-4 rounded-2xl space-y-2 text-xs">
+              <div className="space-y-2 bg-base-200/60 p-4 border border-base-200 rounded-2xl text-xs">
                 <div className="flex justify-between">
                   <span className="text-base-content/60">Parcel Category:</span>
                   <span className="font-bold text-base-content">{selectedParcel.parcelType}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-base-content/60">Receiver Address:</span>
-                  <span className="font-semibold text-base-content max-w-[200px] text-right truncate">
+                  <span className="max-w-[200px] font-semibold text-base-content text-right truncate">
                     {selectedParcel.receiverAddress || 'N/A'}
                   </span>
                 </div>
@@ -320,39 +320,46 @@ const AllParcels = () => {
 
               {/* Rider Select Input */}
               <div className="space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-base-content/70">
+                <label className="block font-bold text-xs text-base-content/70 uppercase tracking-wider">
                   Select Rider
                 </label>
                 <select
                   value={selectedRiderId}
                   onChange={(e) => setSelectedRiderId(e.target.value)}
                   required
-                  className="select select-bordered w-full rounded-xl text-sm focus:outline-none focus:border-primary"
+                  className="focus:border-primary rounded-xl focus:outline-none w-full text-sm select-bordered select"
                 >
                   <option value="" disabled>Choose an active deliveryman</option>
                   {riders.map((rider) => (
                     <option key={rider.id || rider._id} value={rider.id || rider._id}>
-                      {rider.name} — {rider.district || 'All Districts'} ({rider.phone || 'No Phone'})
+                      {rider.name || rider.displayName} — {rider.district || 'All Districts'} ({rider.phone || rider.phoneNumber || 'No Phone'})
                     </option>
                   ))}
                 </select>
               </div>
 
               {/* Action Buttons */}
-              <div className="modal-action pt-2 border-t border-base-200">
+              <div className="pt-2 border-base-200 border-t modal-action">
                 <button
                   type="button"
-                  className="btn btn-ghost btn-sm rounded-xl text-xs font-semibold"
+                  className="rounded-xl font-semibold text-xs btn btn-ghost btn-sm"
                   onClick={() => document.getElementById('assign_rider_modal').close()}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="btn btn-primary btn-sm rounded-xl px-5 text-xs font-semibold shadow-md shadow-primary/20"
+                  className="shadow-md shadow-primary/20 px-5 rounded-xl font-semibold text-xs btn btn-primary btn-sm"
                   disabled={assignRiderMutation.isPending}
                 >
-                  {assignRiderMutation.isPending ? 'Assigning...' : 'Confirm Assignment'}
+                  {assignRiderMutation.isPending ? (
+                    <>
+                      <span className="loading loading-spinner loading-xs"></span>
+                      Assigning...
+                    </>
+                  ) : (
+                    'Confirm Assignment'
+                  )}
                 </button>
               </div>
             </form>
