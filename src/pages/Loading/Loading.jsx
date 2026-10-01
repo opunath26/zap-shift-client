@@ -21,14 +21,18 @@ const Loader = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" className="tiresvg">
                             <circle strokeWidth={3} stroke="#282828" fill="#282828" r="13.5" cy={15} cx={15} />
                             <circle fill="#DFDFDF" r={7} cy={15} cx={15} />
+                            <line x1="15" y1="8" x2="15" y2="22" stroke="#282828" strokeWidth="2" />
+                            <line x1="8" y1="15" x2="22" y2="15" stroke="#282828" strokeWidth="2" />
                         </svg>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 30 30" className="tiresvg">
                             <circle strokeWidth={3} stroke="#282828" fill="#282828" r="13.5" cy={15} cx={15} />
                             <circle fill="#DFDFDF" r={7} cy={15} cx={15} />
+                            <line x1="15" y1="8" x2="15" y2="22" stroke="#282828" strokeWidth="2" />
+                            <line x1="8" y1="15" x2="22" y2="15" stroke="#282828" strokeWidth="2" />
                         </svg>
                     </div>
                     <div className="road" />
-                    <svg xmlSpace="preserve" viewBox="0 0 453.459 453.459" xmlnsXlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" id="Capa_1" version="1.1" fill="#000000" className="lampPost">
+                    <svg xmlSpace="preserve" viewBox="0 0 453.459 453.459" xmlns="http://www.w3.org/2000/svg" id="Capa_1" version="1.1" fill="#000000" className="lampPost">
                         <path d="M252.882,0c-37.781,0-68.686,29.953-70.245,67.358h-6.917v8.954c-26.109,2.163-45.463,10.011-45.463,19.366h9.993
       c-1.65,5.146-2.507,10.54-2.507,16.017c0,28.956,23.558,52.514,52.514,52.514c28.956,0,52.514-23.558,52.514-52.514
       c0-5.478-0.856-10.872-2.506-16.017h9.992c0-9.354-19.352-17.204-45.463-19.366v-8.954h-6.149C200.189,38.779,223.924,16,252.882,16
@@ -43,7 +47,7 @@ const Loader = () => {
             </div>
         </StyledWrapper>
     );
-}
+};
 
 const StyledWrapper = styled.div`
   .loader {
@@ -62,28 +66,31 @@ const StyledWrapper = styled.div`
     position: relative;
     align-items: center;
     justify-content: flex-end;
-    overflow-x: hidden;
+    overflow: hidden;
   }
-  /* truck upper body */
+
+  /* truck upper body vibration */
   .truckBody {
     width: 130px;
     height: fit-content;
     margin-bottom: 6px;
-    animation: motion 1s linear infinite;
+    animation: motion 0.6s ease-in-out infinite alternate;
+    z-index: 2;
   }
-  /* truck suspension animation*/
+
   @keyframes motion {
     0% {
       transform: translateY(0px);
     }
     50% {
-      transform: translateY(3px);
+      transform: translateY(2px) rotate(0.5deg);
     }
     100% {
-      transform: translateY(0px);
+      transform: translateY(-1px) rotate(-0.5deg);
     }
   }
-  /* truck's tires */
+
+  /* truck's tires with rotation */
   .truckTires {
     width: 130px;
     height: fit-content;
@@ -93,49 +100,66 @@ const StyledWrapper = styled.div`
     padding: 0px 10px 0px 15px;
     position: absolute;
     bottom: 0;
-  }
-  .truckTires svg {
-    width: 24px;
+    z-index: 2;
   }
 
+  .truckTires svg {
+    width: 24px;
+    animation: spin 0.5s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Road styling & animation */
   .road {
     width: 100%;
-    height: 1.5px;
+    height: 2px;
     background-color: #282828;
     position: relative;
     bottom: 0;
     align-self: flex-end;
     border-radius: 3px;
   }
+
   .road::before {
     content: "";
     position: absolute;
     width: 20px;
     height: 100%;
     background-color: #282828;
-    right: -50%;
+    right: -20px;
     border-radius: 3px;
-    animation: roadAnimation 1.4s linear infinite;
+    animation: roadAnimation 1.2s linear infinite;
     border-left: 10px solid white;
   }
+
   .road::after {
     content: "";
     position: absolute;
     width: 10px;
     height: 100%;
     background-color: #282828;
-    right: -65%;
+    right: -40px;
     border-radius: 3px;
-    animation: roadAnimation 1.4s linear infinite;
+    animation: roadAnimation 1.2s linear infinite;
+    animation-delay: 0.6s;
     border-left: 4px solid white;
   }
 
   .lampPost {
     position: absolute;
-    bottom: 0;
-    right: -90%;
-    height: 90px;
-    animation: roadAnimation 1.4s linear infinite;
+    bottom: 2px;
+    right: -50px;
+    height: 85px;
+    z-index: 1;
+    animation: lampAnimation 1.8s linear infinite;
   }
 
   @keyframes roadAnimation {
@@ -143,8 +167,18 @@ const StyledWrapper = styled.div`
       transform: translateX(0px);
     }
     100% {
-      transform: translateX(-350px);
+      transform: translateX(-240px);
     }
-  }`;
+  }
+
+  @keyframes lampAnimation {
+    0% {
+      transform: translateX(0px);
+    }
+    100% {
+      transform: translateX(-280px);
+    }
+  }
+`;
 
 export default Loader;
