@@ -29,8 +29,8 @@ const Profile = () => {
 
   if (loading || isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen bg-[#F5F5F5]">
-        <span className="loading loading-spinner loading-lg text-[#84cc16]"></span>
+      <div className="flex justify-center items-center bg-[#F5F5F5] min-h-screen">
+        <span className="text-[#84cc16] loading loading-spinner loading-lg"></span>
       </div>
     );
   }
@@ -42,7 +42,7 @@ const Profile = () => {
       <div className="space-y-6 w-full max-w-4xl">
         
         {/* Main Profile Card */}
-        <div className="relative bg-white shadow-sm hover:shadow-md transition-all duration-300 p-6 md:p-8 rounded-2xl overflow-hidden">
+        <div className="relative bg-white shadow-sm hover:shadow-md p-6 md:p-8 rounded-2xl overflow-hidden transition-all duration-300">
           {/* Top Accent Line */}
           <div className="top-0 left-0 absolute bg-[#84cc16] w-full h-2"></div>
 
@@ -52,9 +52,9 @@ const Profile = () => {
                 <img
                   src={user?.photoURL || dbUser?.photoURL || 'https://i.ibb.co/mR4qB2v/user-placeholder.png'}
                   alt="Profile"
-                  className="border-4 border-[#C6F16A] rounded-full w-28 h-28 object-cover shadow-md"
+                  className="shadow-md border-[#C6F16A] border-4 rounded-full w-28 h-28 object-cover"
                 />
-                <span className="-bottom-1 -right-1 absolute bg-white p-1 rounded-full text-[#84cc16]">
+                <span className="-right-1 -bottom-1 absolute bg-white p-1 rounded-full text-[#84cc16]">
                   <FaCheckCircle className="text-xl" />
                 </span>
               </div>
@@ -64,7 +64,7 @@ const Profile = () => {
                   <h2 className="font-bold text-[#1A1A1A] text-2xl md:text-3xl">
                     {dbUser?.name || user?.displayName || 'User Name'}
                   </h2>
-                  <span className="bg-[#C6F16A]/80 border border-[#84cc16] px-3 py-1 rounded-full font-bold text-gray-900 text-xs uppercase tracking-wider">
+                  <span className="bg-[#C6F16A]/80 px-3 py-1 border border-[#84cc16] rounded-full font-bold text-gray-900 text-xs uppercase tracking-wider">
                     {dbUser?.role || 'User'}
                   </span>
                 </div>
@@ -85,7 +85,7 @@ const Profile = () => {
 
         {/* Rider / Deliveryman Details Section */}
         {isRider && (
-          <div className="bg-white shadow-sm hover:shadow-md transition-all duration-300 p-6 md:p-8 rounded-2xl">
+          <div className="bg-white shadow-sm hover:shadow-md p-6 md:p-8 rounded-2xl transition-all duration-300">
             <div className="flex justify-between items-center mb-6 pb-3 border-b">
               <h3 className="flex items-center gap-2 font-semibold text-gray-800 text-xl">
                 <FaMotorcycle className="text-[#84cc16] text-2xl" /> Rider Details & Status
@@ -97,8 +97,8 @@ const Profile = () => {
 
             <div className="gap-6 grid grid-cols-1 md:grid-cols-2">
               {/* NID */}
-              <div className="flex items-center gap-4 bg-gray-50/80 p-4 border border-gray-100 rounded-xl hover:border-gray-200 transition-colors">
-                <div className="bg-white p-3 rounded-lg text-[#84cc16] shadow-sm">
+              <div className="flex items-center gap-4 bg-gray-50/80 p-4 border border-gray-100 hover:border-gray-200 rounded-xl transition-colors">
+                <div className="bg-white shadow-sm p-3 rounded-lg text-[#84cc16]">
                   <FaIdCard className="text-xl" />
                 </div>
                 <div>
@@ -108,8 +108,8 @@ const Profile = () => {
               </div>
 
               {/* License */}
-              <div className="flex items-center gap-4 bg-gray-50/80 p-4 border border-gray-100 rounded-xl hover:border-gray-200 transition-colors">
-                <div className="bg-white p-3 rounded-lg text-[#84cc16] shadow-sm">
+              <div className="flex items-center gap-4 bg-gray-50/80 p-4 border border-gray-100 hover:border-gray-200 rounded-xl transition-colors">
+                <div className="bg-white shadow-sm p-3 rounded-lg text-[#84cc16]">
                   <FaShieldAlt className="text-xl" />
                 </div>
                 <div>
@@ -119,12 +119,12 @@ const Profile = () => {
               </div>
 
               {/* Region & District */}
-              <div className="flex items-center gap-4 bg-gray-50/80 p-4 border border-gray-100 rounded-xl hover:border-gray-200 transition-colors">
-                <div className="bg-white p-3 rounded-lg text-[#84cc16] shadow-sm">
+              <div className="flex items-center gap-4 bg-gray-50/80 p-4 border border-gray-100 hover:border-gray-200 rounded-xl transition-colors">
+                <div className="bg-white shadow-sm p-3 rounded-lg text-[#84cc16]">
                   <FaMapMarkerAlt className="text-xl" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-400 text-xs uppercase tracking-wider">Region & District</p>
+                  <p className="font-medium text-gray-400 text-xs uppercase tracking-wider">Region  District</p>
                   <p className="font-semibold text-gray-800">
                     {dbUser?.district || dbUser?.region 
                       ? `${dbUser?.district || ''}${dbUser?.district && dbUser?.region ? ', ' : ''}${dbUser?.region || ''}`
@@ -134,12 +134,12 @@ const Profile = () => {
               </div>
 
               {/* Bike Details */}
-              <div className="flex items-center gap-4 bg-gray-50/80 p-4 border border-gray-100 rounded-xl hover:border-gray-200 transition-colors">
-                <div className="bg-white p-3 rounded-lg text-[#84cc16] shadow-sm">
+              <div className="flex items-center gap-4 bg-gray-50/80 p-4 border border-gray-100 hover:border-gray-200 rounded-xl transition-colors">
+                <div className="bg-white shadow-sm p-3 rounded-lg text-[#84cc16]">
                   <FaMotorcycle className="text-xl" />
                 </div>
                 <div>
-                  <p className="font-medium text-gray-400 text-xs uppercase tracking-wider">Bike Model & Reg No</p>
+                  <p className="font-medium text-gray-400 text-xs uppercase tracking-wider">Bike Model And Reg No</p>
                   <p className="font-semibold text-gray-800">
                     {dbUser?.bikeModel 
                       ? `${dbUser?.bikeModel} ${dbUser?.bikeRegNo ? `(${dbUser?.bikeRegNo})` : ''}` 
