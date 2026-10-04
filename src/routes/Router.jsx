@@ -20,6 +20,7 @@ import AdminRiderApplications from "../pages/Dashboard/RiderApplications/AdminRi
 import MyDeliveries from "../pages/Dashboard/MyDeliveries/MyDeliveries";
 import RiderDashboard from "../pages/Dashboard/RiderDashboard/RiderDashboard";
 import AdminCashHandovers from "../pages/Dashboard/AdminCashHandovers/AdminCashHandovers";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -141,5 +142,9 @@ export const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);
