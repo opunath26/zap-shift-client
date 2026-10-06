@@ -49,7 +49,7 @@ const ErrorPage = () => {
           </p>
 
           {/* Quick Divider */}
-          <div className="my-2 text-xs text-base-content/30 divider">ZAP SHIFT</div>
+          <div className="my-2 text-xs text-base-content/30 divider">ZAP-SHIFT</div>
 
           {/* Action Buttons */}
           <div className="flex sm:flex-row flex-col justify-center items-center gap-3 pt-2">
@@ -64,7 +64,7 @@ const ErrorPage = () => {
               to="/"
               className="shadow-md shadow-primary/20 px-5 rounded-xl w-full sm:w-auto h-10 min-h-[2.5rem] font-semibold text-white text-xs btn btn-primary"
             >
-              Back to Home 🏠
+              Back to Home 
             </Link>
           </div>
 
