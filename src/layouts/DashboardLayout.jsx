@@ -144,7 +144,7 @@ const DashboardLayout = () => {
             <li className="mt-auto">
               <NavLink className="is-drawer-close:tooltip-right is-drawer-close:tooltip" data-tip="Settings" to="/dashboard/profile">
                 <FaUserCog className="size-5" />
-                <span className="is-drawer-close:hidden">Profile Settings</span>
+                <span className="is-drawer-close:hidden">Profile</span>
               </NavLink>
             </li>
           </ul>
