@@ -9,7 +9,7 @@ const faqData = [
   },
   {
     id: 2,
-    question: "How do I track my shipment in real-time?",
+    question: "How do I track my shipment in real-time ?",
     answer: "Once your order is placed, you will receive a unique tracking ID and a live link via SMS/Email. You can also track it directly from the 'Track Order' page on our website."
   },
   {
@@ -30,7 +30,7 @@ const faqData = [
 ];
 
 const FAQ = () => {
-  const [openId, setOpenId] = useState(1); // First item open by default
+  const [openId, setOpenId] = useState(1); 
 
   const toggleFAQ = (id) => {
     setOpenId(openId === id ? null : id);
