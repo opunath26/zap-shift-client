@@ -14,12 +14,12 @@ const About = () => {
     {
       icon: <FaShippingFast className="text-primary text-4xl" />,
       title: 'Fastest Delivery',
-      desc: 'Super-fast door-to-door parcel delivery with real-time tracking system.',
+      desc: 'Super-fast door-to-door parcel delivery with real-time tracking System.',
     },
     {
       icon: <FaShieldAlt className="text-primary text-4xl" />,
       title: '100% Secure',
-      desc: 'Complete safety insurance for your high-value goods and documents.',
+      desc: 'Complete safety insurance for your high-value goods and Documents.',
     },
     {
       icon: <FaUsers className="text-primary text-4xl" />,
@@ -29,7 +29,7 @@ const About = () => {
     {
       icon: <FaGlobe className="text-primary text-4xl" />,
       title: 'Nationwide Network',
-      desc: 'Strong logistics infrastructure spanning every corner of the country.',
+      desc: 'Strong logistics infrastructure spanning every corner of the Country.',
     },
   ];
 

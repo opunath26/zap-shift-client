@@ -82,15 +82,15 @@ const JoinBanner = () => {
             <ul className="space-y-2.5 mb-8 font-medium text-secondary/90 text-sm">
               <li className="flex items-center gap-2.5">
                 <FaCheckCircle className="flex-shrink-0 text-secondary text-base" />
-                <span>Flexible work timing — full-time or part-time</span>
+                <span>Flexible Work Timing — Full-Time or Part-Time</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <FaCheckCircle className="flex-shrink-0 text-secondary text-base" />
-                <span>Weekly guaranteed payments & delivery bonuses</span>
+                <span>Weekly Guaranteed Payments & Delivery Bonuses</span>
               </li>
               <li className="flex items-center gap-2.5">
                 <FaCheckCircle className="flex-shrink-0 text-secondary text-base" />
-                <span>Accidental health insurance coverage</span>
+                <span>Accidental Health Insurance Coverage</span>
               </li>
             </ul>
           </div>
