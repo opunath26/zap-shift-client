@@ -15,7 +15,7 @@ const statsData = [
   {
     id: 2,
     icon: <FaBoxes className="text-primary text-3xl" />,
-    number: 1000000,
+    number: 28374920,
     suffix: '+',
     title: 'Successful Deliveries',
     description: 'Safe & door-to-door deliveries',
