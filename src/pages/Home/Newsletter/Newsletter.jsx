@@ -63,7 +63,7 @@ const Newsletter = () => {
                 Subscribe to Get Urgent Delivery & Merchant Updates
               </h2>
               <p className="mx-auto lg:mx-0 max-w-xl text-gray-300 text-sm sm:text-base leading-relaxed">
-                Join 5,000+ top e-commerce merchants and businesses getting exclusive courier discount offers, logistics advice, and feature updates.
+                Join 8,250+ top e-commerce merchants and businesses getting exclusive courier discount offers, logistics advice, and feature updates.
               </p>
             </div>
 
