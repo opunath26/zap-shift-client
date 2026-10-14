@@ -92,7 +92,7 @@ const MyDeliveries = () => {
         <div>
           <h2 className="font-extrabold text-base-content text-3xl tracking-tight">My Deliveries 🚚</h2>
           <p className="mt-1 text-sm text-base-content/60">
-            View assigned parcels, update statuses, and manage pickup/delivery schedules.
+            View Assigned Parcels, Update Statuses, and Manage Pickup/Delivery Schedules.
           </p>
         </div>
         <div className="p-3 rounded-xl font-semibold text-sm badge badge-primary">
