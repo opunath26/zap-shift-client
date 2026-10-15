@@ -9,12 +9,12 @@ const faqData = [
   },
   {
     id: 2,
-    question: "How do I track my shipment in real-time ?",
+    question: "How do I track my shipment in Real-Time ?",
     answer: "Once your order is placed, you will receive a unique tracking ID and a live link via SMS/Email. You can also track it directly from the 'Track Order' page on our website."
   },
   {
     id: 3,
-    question: "What are your Cash on Delivery (COD) payment terms?",
+    question: "What are your Cash on Delivery (COD) Payment terms?",
     answer: "We collect Cash on Delivery on your behalf without any hidden charges. Funds are automatically transferred directly to your merchant bank account or mobile wallet within 24 hours of successful delivery."
   },
   {
