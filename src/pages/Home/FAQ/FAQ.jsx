@@ -10,7 +10,7 @@ const faqData = [
   {
     id: 2,
     question: "How do I track my shipment in Real-Time ?",
-    answer: "Once your order is placed, you will receive a unique tracking ID and a live link via SMS/Email. You can also track it directly from the 'Track Order' page on our website."
+    answer: "Once your order is placed, you will Receive a unique tracking ID and a live link via SMS/Email. You can also track it directly from the 'Track Order' page on our website."
   },
   {
     id: 3,
