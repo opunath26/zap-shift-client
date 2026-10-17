@@ -69,7 +69,7 @@ const Rider = () => {
         <h1 className="font-bold text-[#1A1A1A] text-3xl">Be a Rider</h1>
         <p className="mt-2 max-w-xl text-gray-600">
           Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle.
-          From personal packages to business shipments — we deliver on time, every time.
+          From Personal Packages to Business Shipments — We Deliver on Time, Every Time.
         </p>
 
         <hr className="my-8 border-gray-200" />

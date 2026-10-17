@@ -74,7 +74,7 @@ const WhyChooseUs = () => {
             Why Choose <span className="bg-secondary px-3 py-1 rounded-xl text-primary">Zap-Shift</span>?
           </h2>
           <p className="mt-3 text-gray-600 text-sm sm:text-base leading-relaxed">
-            We Empower Businesses and Individuals With Fast, Transparent, and Technology-Driven ogistics Solutions.
+            We Empower Businesses and Individuals With Fast, Transparent, and Technology-Driven Ogistics Solutions.
           </p>
         </motion.div>
 
