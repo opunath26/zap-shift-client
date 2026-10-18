@@ -31,7 +31,7 @@ const Reviews = ({ reviewsPromise }) => {
             What Our Customers Are Saying
           </h2>
           <p className="mb-12 text-gray-600 text-sm sm:text-base leading-relaxed">
-            From fast parcel dispatches to seamless corporate logistics — see how we deliver happiness and reliability right to our customers' doorsteps every day!
+            From fast parcel dispatches to seamless Corporate logistics — see how we deliver Happiness and reliability right to our customers' doorsteps every day!
           </p>
         </div>
 
